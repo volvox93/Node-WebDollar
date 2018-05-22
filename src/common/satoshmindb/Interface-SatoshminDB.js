@@ -5,6 +5,7 @@ import consts from 'consts/const_global'
 
 const atob = require('atob');
 const btoa = require('btoa');
+import consts from 'consts/const_global'
 import MainBlockchain from 'main-blockchain/Blockchain';
 import StatusEvents from "common/events/Status-Events";
 
@@ -65,7 +66,22 @@ class InterfaceSatoshminDB {
     async _getDocument(key) {
 
         try {
-            let response = await this.db.get(key, {attachments: true});
+
+            let response;
+
+            try {
+
+                response = await this.db.get(key, {attachments: true});
+
+            } catch(Exception){
+
+                setTimeout( async ()=> {
+
+                    response = await this.db.get(key, {attachments: true});
+
+                },consts.DB_GET_RETRY)
+
+            }
 
             if (response._attachments === undefined) {
                 return response.value;

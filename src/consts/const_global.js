@@ -237,6 +237,8 @@ consts.SETTINGS = {
             VERSION: "0.1"
         },
 
+        DB_GET_RETRY: 1000*20,
+
         CONNECTIONS:{
 
             NO_OF_IDENTICAL_IPS: 3,
